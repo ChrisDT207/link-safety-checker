@@ -1,11 +1,18 @@
 # Build results
 bin/
 obj/
-publish/
-*.exe
+*.pdb
+publish/appsettings.json
+publish/wwwroot/
+
+# Allow the executable to be tracked in git
+!LinkSafetyChecker.exe
+!publish/LinkSafetyChecker.exe
+
 
 # Secrets & Configuration
 appsettings.json
+**/appsettings.json
 *.local.json
 *.log
 logs/
