@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>LinkSafetyChecker</RootNamespace>
+    <AssemblyName>LinkSafetyChecker</AssemblyName>
+    <!-- Single-file publish settings -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="LinkSafetyChecker.Tests\**" />
+    <Content Remove="LinkSafetyChecker.Tests\**" />
+    <EmbeddedResource Remove="LinkSafetyChecker.Tests\**" />
+    <None Remove="LinkSafetyChecker.Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="1.8.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0" />
+    <PackageReference Include="Photino.NET" Version="4.0.16" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.example.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="wwwroot\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="wwwroot\**" />
+  </ItemGroup>
+
+  <Target Name="EnsureNpmInstall" BeforeTargets="BuildReactClient" Condition="Exists('client\package.json') And !Exists('client\node_modules')">
+    <Message Importance="high" Text="Installing React client npm dependencies..." />
+    <Exec Command="npm.cmd install" WorkingDirectory="client" />
+  </Target>
+
+  <Target Name="BuildReactClient" BeforeTargets="BeforeBuild" Condition="Exists('client\package.json') And (!Exists('wwwroot\index.html') Or '$(Configuration)' == 'Release')">
+    <Message Importance="high" Text="Building React frontend with Vite..." />
+    <Exec Command="npm.cmd run build" WorkingDirectory="client" />
+  </Target>
+
+</Project>

@@ -1,0 +1,24 @@
+# Build results
+bin/
+obj/
+publish/
+*.exe
+
+# Secrets & Configuration
+appsettings.json
+*.local.json
+*.log
+logs/
+
+# Node & Frontend build
+client/node_modules/
+client/dist/
+wwwroot/
+
+# IDE & OS
+.vs/
+.vscode/
+*.user
+*.suo
+.DS_Store
+Thumbs.db
