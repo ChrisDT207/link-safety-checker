@@ -49,6 +49,20 @@ public static class Program
             .SetSize(new Size(1080, 820))
             .Center();
 
+        var iconPath = assetManager.ResolveIconPath();
+        if (!string.IsNullOrEmpty(iconPath) && File.Exists(iconPath))
+        {
+            try
+            {
+                window.SetIconFile(iconPath);
+                logger.LogInformation("Applied native window icon from: {IconPath}", iconPath);
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex, "Could not set native window icon from: {IconPath}", iconPath);
+            }
+        }
+
         // 5. Attach Desktop IPC Bridge
         var ipcHandler = serviceProvider.GetRequiredService<IDesktopIpcHandler>();
         ipcHandler.Attach(window);

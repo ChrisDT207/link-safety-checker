@@ -56,6 +56,46 @@ public class StaticAssetManager : IStaticAssetManager
         return directPath;
     }
 
+    public string? ResolveIconPath()
+    {
+        var baseDir = AppContext.BaseDirectory;
+        var directPath = Path.Combine(baseDir, "app.ico");
+        if (File.Exists(directPath))
+        {
+            return directPath;
+        }
+
+        var cwdPath = Path.Combine(Directory.GetCurrentDirectory(), "app.ico");
+        if (File.Exists(cwdPath))
+        {
+            return cwdPath;
+        }
+
+        var wwwrootDirect = Path.Combine(baseDir, "wwwroot", "app.ico");
+        if (File.Exists(wwwrootDirect))
+        {
+            return wwwrootDirect;
+        }
+
+        var wwwrootCwd = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "app.ico");
+        if (File.Exists(wwwrootCwd))
+        {
+            return wwwrootCwd;
+        }
+
+        var fallbackIcon = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "LinkSafetyChecker",
+            "wwwroot",
+            "app.ico");
+        if (File.Exists(fallbackIcon))
+        {
+            return fallbackIcon;
+        }
+
+        return null;
+    }
+
     private bool ExtractEmbeddedAssets(string targetDirectory)
     {
         var assembly = Assembly.GetExecutingAssembly();

@@ -248,9 +248,22 @@ export default function App() {
     <div className="container">
       <header className="header">
         <div className="header-top">
-          <div>
-            <h1>URL Link Safety Checker</h1>
-            <p className="subtitle">Static DOM Inspection, SSRF-Guarded Fetcher, &amp; Threat Analysis</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <img
+              src="./app_icon.png"
+              alt="Link Safety Checker Logo"
+              style={{
+                width: '44px',
+                height: '44px',
+                borderRadius: '10px',
+                boxShadow: '0 0 16px rgba(56, 189, 248, 0.3)',
+                flexShrink: 0,
+              }}
+            />
+            <div>
+              <h1>URL Link Safety Checker</h1>
+              <p className="subtitle">Static DOM Inspection, SSRF-Guarded Fetcher, &amp; Threat Analysis</p>
+            </div>
           </div>
           <button
             type="button"
